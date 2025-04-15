@@ -21,6 +21,38 @@ const matchHistory = {
   "999": 0
 };
 
+function activateDevilMode() {
+  digits = { digit1: 6, digit2: 6, digit3: 6 };
+  updateMatchCounter();
+
+  // Show blinking message
+  const msg = document.getElementById("devil-mode-msg");
+  if (msg) {
+    msg.style.display = "block";
+    setTimeout(() => {
+      msg.style.display = "none";
+    }, 4000);
+  }
+
+  // Show devil emoji + shake
+  const devil = document.getElementById("devil-alert");
+  if (devil) {
+    devil.style.display = "block";
+    devil.classList.add("flash");
+  }
+
+  document.body.classList.add("shake");
+  setTimeout(() => {
+    document.body.classList.remove("shake");
+    if (devil) {
+      devil.classList.remove("flash");
+      devil.style.display = "none";
+    }
+  }, 5000);
+
+  console.log("😈 Devil mode triggered from 666 leaderboard tap");
+}
+
 function renderMatchHistory() {
   const listEl = document.getElementById("match-list");
   listEl.innerHTML = "";
@@ -160,38 +192,6 @@ document.getElementById("reset-button").addEventListener("click", () => {
   const lastMatchEl = document.getElementById("last-match");
   lastMatchEl.textContent = "Last Match: —";
 });
-
-function activateDevilMode() {
-  digits = { digit1: 6, digit2: 6, digit3: 6 };
-  updateMatchCounter();
-
-  // Show blinking message
-  const msg = document.getElementById("devil-mode-msg");
-  if (msg) {
-    msg.style.display = "block";
-    setTimeout(() => {
-      msg.style.display = "none";
-    }, 4000);
-  }
-
-  // Show devil emoji + shake
-  const devil = document.getElementById("devil-alert");
-  if (devil) {
-    devil.style.display = "block";
-    devil.classList.add("flash");
-  }
-
-  document.body.classList.add("shake");
-  setTimeout(() => {
-    document.body.classList.remove("shake");
-    if (devil) {
-      devil.classList.remove("flash");
-      devil.style.display = "none";
-    }
-  }, 5000);
-
-  console.log("😈 Devil mode triggered from 666 leaderboard tap");
-}
 
 // Initialize app
 renderMatchHistory();
