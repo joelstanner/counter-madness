@@ -29,50 +29,81 @@ body {
   user-select: none;
 }
 
-/* Match Counter at the bottom */
 #match-counter {
   font-size: 6vw;
   color: #00ff99;
 }
 
-/* Match History box */
 #match-log {
   background-color: #222;
-  padding: 10px;
+  padding: 1rem;
   border-radius: 10px;
-  font-size: 4vw;
   color: #fff;
-  max-height: 60vh;
-  overflow-y: auto;
   width: 90%;
-  max-width: 300px;
+  max-width: 400px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive stacking on mobile */
-/* Mobile first styles */
-.digit {
-  font-size: 15vw;
+#match-log h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
-#match-counter {
-  font-size: 8vw;
-  margin: 15px 0;
+#match-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.5rem;
+  padding-top: 0.5rem;
 }
 
-#match-log {
-  font-size: 5vw;
-  width: 85%;
-  margin: 10px;
-  padding: 15px;
+.match-item {
+  background: #333;
+  border-radius: 6px;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
 }
 
-/* Desktop styles */
+.match-item.top-match {
+  background-color: #00ff99;
+  color: #111;
+  font-weight: bold;
+  transform: scale(1.05);
+}
+
+.match-item.flash {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); background-color: #00ff99; color: #111; }
+  100% { transform: scale(1); }
+}
+
+@keyframes flash-bg {
+  0%   { background-color: #111; }
+  50%  { background-color: #00ff99; }
+  100% { background-color: #111; }
+}
+
+body.flash {
+  animation: flash-bg 0.3s ease-in-out;
+}
+
+/* Larger screens */
 @media (min-width: 768px) {
   body {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: flex-start;
-    padding: 40px;
+    padding: 2rem;
   }
 
   .main-content {
@@ -80,35 +111,16 @@ body {
     align-items: center;
   }
 
-  #match-log {
-    font-size: 2vw;
-    width: 90%;
-  }
-
-  #match-counter {
-    font-size: 3vw;
-  }
-
   .digit {
     font-size: 10vw;
   }
-}
 
-@keyframes flash-bg {
-  0% {
-    background-color: #111;
+  #match-counter {
+    font-size: 2rem;
   }
 
-  50% {
-    background-color: #33ffbb;
+  #match-log {
+    width: 320px;
+    font-size: 1rem;
   }
-
-  /* brighter flash */
-  100% {
-    background-color: #111;
-  }
-}
-
-body.flash {
-  animation: flash-bg 0.5s ease-out;
 }
