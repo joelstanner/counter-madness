@@ -57,6 +57,12 @@ function updateMatchCounter() {
   document.body.classList.remove("flash");
   void document.body.offsetWidth;
   document.body.classList.add("flash");
+
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
   }
 }
 
