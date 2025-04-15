@@ -69,23 +69,6 @@ function updateMatchCounter() {
   confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 }
 
-
-    document.body.classList.remove("flash");
-    void document.body.offsetWidth;
-    document.body.classList.add("flash");
-
-    const lastMatchEl = document.getElementById("last-match");
-    lastMatchEl.textContent = `Last Match: ${matchKey}`;
-    lastMatchEl.classList.remove("flash");
-    void lastMatchEl.offsetWidth; // trigger reflow
-    lastMatchEl.classList.add("flash");
-
-    // 🎉 Confetti
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
   }
 }
 
