@@ -13,7 +13,7 @@ const matchHistory = {
   "555": 0, "666": 0, "777": 0, "888": 0, "999": 0
 };
 
-function renderMatchHistory(highlightKey) {
+function renderMatchHistory() {
   const listEl = document.getElementById("match-list");
   listEl.innerHTML = "";
 
@@ -29,13 +29,11 @@ function renderMatchHistory(highlightKey) {
       div.classList.add("top-match");
     }
 
-    if (key === highlightKey) {
-      div.classList.add("flash");
-    }
-
+    div.id = `match-${key}`;
     listEl.appendChild(div);
   });
 }
+
 
 function updateMatchCounter() {
   const values = Object.values(digits);
@@ -43,14 +41,22 @@ function updateMatchCounter() {
     const matchKey = `${values[0]}${values[0]}${values[0]}`;
     matchCount++;
     document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
+    
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
-      renderMatchHistory(matchKey);
+      renderMatchHistory();
+    
+      // Flash highlight on the current match item
+      const flashEl = document.getElementById(`match-${matchKey}`);
+      if (flashEl) {
+        flashEl.classList.add("flash");
+        setTimeout(() => flashEl.classList.remove("flash"), 1000);
+      }
     }
 
-    document.body.classList.remove("flash");
-    void document.body.offsetWidth;
-    document.body.classList.add("flash");
+  document.body.classList.remove("flash");
+  void document.body.offsetWidth;
+  document.body.classList.add("flash");
   }
 }
 
