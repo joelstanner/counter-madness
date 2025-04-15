@@ -13,27 +13,6 @@ const matchHistory = {
   "555": 0, "666": 0, "777": 0, "888": 0, "999": 0
 };
 
-const matchSound = document.getElementById("match-sound");
-
-// Load saved state from localStorage
-function loadState() {
-  const savedCount = localStorage.getItem("matchCount");
-  const savedHistory = localStorage.getItem("matchHistory");
-  if (savedCount) matchCount = parseInt(savedCount);
-  if (savedHistory) {
-    const parsed = JSON.parse(savedHistory);
-    Object.keys(matchHistory).forEach(key => {
-      if (parsed[key] !== undefined) matchHistory[key] = parsed[key];
-    });
-  }
-}
-
-// Save state to localStorage
-function saveState() {
-  localStorage.setItem("matchCount", matchCount);
-  localStorage.setItem("matchHistory", JSON.stringify(matchHistory));
-}
-
 function renderMatchHistory() {
   const listEl = document.getElementById("match-list");
   listEl.innerHTML = "";
@@ -84,10 +63,6 @@ function updateMatchCounter() {
       spread: 70,
       origin: { y: 0.6 }
     });
-
-    // 🔔 Sound
-    matchSound.currentTime = 0;
-    matchSound.play();
   }
 }
 
