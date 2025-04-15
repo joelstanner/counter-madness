@@ -198,3 +198,27 @@ body.shake {
   100% { transform: translate(0, 0); }
 }
 
+#cheat-zone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  z-index: 10;
+  opacity: 0; /* fully invisible */
+}
+
+#devil-mode-msg {
+  font-size: 1.3rem;
+  color: #ff3333;
+  font-weight: bold;
+  text-align: center;
+  animation: blink 0.8s infinite;
+  text-shadow: 1px 1px 4px #000;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+

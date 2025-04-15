@@ -153,6 +153,33 @@ document.getElementById("reset-button").addEventListener("click", () => {
   lastMatchEl.textContent = "Last Match: —";
 });
 
+// secret cheat for the devil 
+let tapCount = 0;
+let tapTimer;
+
+document.getElementById("cheat-zone").addEventListener("click", () => {
+  tapCount++;
+
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(() => {
+    tapCount = 0;
+  }, 1000); // reset if more than 1 second passes
+
+  if (tapCount === 6) {
+    digits = { digit1: 6, digit2: 6, digit3: 6 };
+    updateMatchCounter();
+
+    const msg = document.getElementById("devil-mode-msg");
+    if (msg) {
+      msg.style.display = "block";
+      setTimeout(() => { msg.style.display = "none"; }, 4000);
+    }
+
+    console.log("😈 Devil cheat activated on mobile!");
+  }
+});
+
+
 // Initialize app
 renderMatchHistory();
 document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
