@@ -1,3 +1,4 @@
+// Initial state
 let digits = {
   digit1: 0,
   digit2: 0,
@@ -6,13 +7,23 @@ let digits = {
 
 let matchCount = 0;
 let running = true;
-let timers = {};  // To hold timer IDs
+let timers = {}; // Holds active timer IDs
 
+// Match tracking object
 const matchHistory = {
-  "000": 0, "111": 0, "222": 0, "333": 0, "444": 0,
-  "555": 0, "666": 0, "777": 0, "888": 0, "999": 0
+  "000": 0,
+  "111": 0,
+  "222": 0,
+  "333": 0,
+  "444": 0,
+  "555": 0,
+  "666": 0,
+  "777": 0,
+  "888": 0,
+  "999": 0
 };
 
+// Render match history to the DOM
 function renderMatchHistory() {
   const listEl = document.getElementById("match-list");
   listEl.innerHTML = "";
@@ -25,6 +36,7 @@ function renderMatchHistory() {
     div.className = "match-item";
     div.textContent = `${key} → ${count}`;
 
+    // Highlight top match
     if (topKeys.includes(key) && count > 0) {
       div.classList.add("top-match");
     }
@@ -34,19 +46,20 @@ function renderMatchHistory() {
   });
 }
 
-
+// Called on every digit update to check for match and trigger effects
 function updateMatchCounter() {
   const values = Object.values(digits);
-  if (values.every((val) => val === values[0])) {
+
+  if (values.every(val => val === values[0])) {
     const matchKey = `${values[0]}${values[0]}${values[0]}`;
     matchCount++;
     document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
-    
+
+    // Update match history and animate flash
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
       renderMatchHistory();
-    
-      // Flash highlight on the current match item
+
       const flashEl = document.getElementById(`match-${matchKey}`);
       if (flashEl) {
         flashEl.classList.add("flash");
@@ -54,18 +67,21 @@ function updateMatchCounter() {
       }
     }
 
-  document.body.classList.remove("flash");
-  void document.body.offsetWidth;
-  document.body.classList.add("flash");
+    // Flash screen background
+    document.body.classList.remove("flash");
+    void document.body.offsetWidth; // trigger reflow
+    document.body.classList.add("flash");
 
-  confetti({
-    particleCount: 100,
-    spread: 70,
-    origin: { y: 0.6 }
-  });
+    // Launch confetti
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
   }
 }
 
+// Main digit loop with variable timing
 function startDigitLoop(id, minSpeed, maxSpeed) {
   const el = document.getElementById(id);
 
@@ -83,6 +99,7 @@ function startDigitLoop(id, minSpeed, maxSpeed) {
   loop();
 }
 
+// Starts all digit counters
 function startAll() {
   running = true;
   startDigitLoop("digit1", 50, 800);
@@ -91,19 +108,18 @@ function startAll() {
   document.getElementById("toggle-button").textContent = "Stop";
 }
 
+// Stops all digit counters
 function stopAll() {
   running = false;
   Object.values(timers).forEach(clearTimeout);
   document.getElementById("toggle-button").textContent = "Start";
 }
 
+// Handle start/stop button
 document.getElementById("toggle-button").addEventListener("click", () => {
-  if (running) {
-    stopAll();
-  } else {
-    startAll();
-  }
+  running ? stopAll() : startAll();
 });
 
+// Initialize
 renderMatchHistory();
-startAll();  // initial start
+startAll();
