@@ -1,4 +1,3 @@
-// Initial state
 let digits = {
   digit1: 0,
   digit2: 0,
@@ -7,23 +6,34 @@ let digits = {
 
 let matchCount = 0;
 let running = true;
-let timers = {}; // Holds active timer IDs
+let timers = {};
 
-// Match tracking object
 const matchHistory = {
-  "000": 0,
-  "111": 0,
-  "222": 0,
-  "333": 0,
-  "444": 0,
-  "555": 0,
-  "666": 0,
-  "777": 0,
-  "888": 0,
-  "999": 0
+  "000": 0, "111": 0, "222": 0, "333": 0, "444": 0,
+  "555": 0, "666": 0, "777": 0, "888": 0, "999": 0
 };
 
-// Render match history to the DOM
+const matchSound = document.getElementById("match-sound");
+
+// Load saved state from localStorage
+function loadState() {
+  const savedCount = localStorage.getItem("matchCount");
+  const savedHistory = localStorage.getItem("matchHistory");
+  if (savedCount) matchCount = parseInt(savedCount);
+  if (savedHistory) {
+    const parsed = JSON.parse(savedHistory);
+    Object.keys(matchHistory).forEach(key => {
+      if (parsed[key] !== undefined) matchHistory[key] = parsed[key];
+    });
+  }
+}
+
+// Save state to localStorage
+function saveState() {
+  localStorage.setItem("matchCount", matchCount);
+  localStorage.setItem("matchHistory", JSON.stringify(matchHistory));
+}
+
 function renderMatchHistory() {
   const listEl = document.getElementById("match-list");
   listEl.innerHTML = "";
@@ -36,7 +46,6 @@ function renderMatchHistory() {
     div.className = "match-item";
     div.textContent = `${key} → ${count}`;
 
-    // Highlight top match
     if (topKeys.includes(key) && count > 0) {
       div.classList.add("top-match");
     }
@@ -46,18 +55,16 @@ function renderMatchHistory() {
   });
 }
 
-// Called on every digit update to check for match and trigger effects
 function updateMatchCounter() {
   const values = Object.values(digits);
-
   if (values.every(val => val === values[0])) {
     const matchKey = `${values[0]}${values[0]}${values[0]}`;
     matchCount++;
     document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
 
-    // Update match history and animate flash
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
+      saveState(); // persist
       renderMatchHistory();
 
       const flashEl = document.getElementById(`match-${matchKey}`);
@@ -67,21 +74,23 @@ function updateMatchCounter() {
       }
     }
 
-    // Flash screen background
     document.body.classList.remove("flash");
-    void document.body.offsetWidth; // trigger reflow
+    void document.body.offsetWidth;
     document.body.classList.add("flash");
 
-    // Launch confetti
+    // 🎉 Confetti
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }
     });
+
+    // 🔔 Sound
+    matchSound.currentTime = 0;
+    matchSound.play();
   }
 }
 
-// Main digit loop with variable timing
 function startDigitLoop(id, minSpeed, maxSpeed) {
   const el = document.getElementById(id);
 
@@ -99,7 +108,6 @@ function startDigitLoop(id, minSpeed, maxSpeed) {
   loop();
 }
 
-// Starts all digit counters
 function startAll() {
   running = true;
   startDigitLoop("digit1", 50, 800);
@@ -108,18 +116,28 @@ function startAll() {
   document.getElementById("toggle-button").textContent = "Stop";
 }
 
-// Stops all digit counters
 function stopAll() {
   running = false;
   Object.values(timers).forEach(clearTimeout);
   document.getElementById("toggle-button").textContent = "Start";
 }
 
-// Handle start/stop button
 document.getElementById("toggle-button").addEventListener("click", () => {
   running ? stopAll() : startAll();
 });
 
-// Initialize
+document.getElementById("reset-button").addEventListener("click", () => {
+  if (!confirm("Reset all match data?")) return;
+
+  matchCount = 0;
+  Object.keys(matchHistory).forEach(key => (matchHistory[key] = 0));
+  localStorage.clear();
+  renderMatchHistory();
+  document.getElementById("match-counter").textContent = `Matches: 0`;
+});
+
+// Initialize app
+loadState();
 renderMatchHistory();
+document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
 startAll();
