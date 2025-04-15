@@ -11,14 +11,26 @@ const matchHistory = {
   "999": 0
 };
 
-function renderMatchHistory() {
+function renderMatchHistory(highlightKey) {
   const listEl = document.getElementById("match-list");
-  listEl.innerHTML = ""; // Clear previous
+  listEl.innerHTML = "";
+
+  const topValue = Math.max(...Object.values(matchHistory));
+  const topKeys = Object.keys(matchHistory).filter(key => matchHistory[key] === topValue);
 
   Object.entries(matchHistory).forEach(([key, count]) => {
     const div = document.createElement("div");
     div.className = "match-item";
     div.textContent = `${key} → ${count}`;
+
+    if (topKeys.includes(key) && count > 0) {
+      div.classList.add("top-match");
+    }
+
+    if (key === highlightKey) {
+      div.classList.add("flash");
+    }
+
     listEl.appendChild(div);
   });
 }
