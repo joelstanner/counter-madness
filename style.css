@@ -187,7 +187,7 @@ body.flash {
 }
 
 body.shake {
-  animation: screenShake 0.9s ease-in-out;
+  animation: screenShake 0.9s ease-in-out !important;
 }
 
 @keyframes screenShake {
