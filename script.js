@@ -43,7 +43,6 @@ function updateMatchCounter() {
 
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
-      saveState(); // persist
       renderMatchHistory();
 
       const flashEl = document.getElementById(`match-${matchKey}`);
