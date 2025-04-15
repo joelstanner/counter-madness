@@ -40,17 +40,32 @@ function updateMatchCounter() {
     const matchKey = `${values[0]}${values[0]}${values[0]}`;
     matchCount++;
     document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
-
+  
+    // ✅ Always update this
+    const lastMatchEl = document.getElementById("last-match");
+    lastMatchEl.textContent = `Last Match: ${matchKey}`;
+    lastMatchEl.classList.remove("flash");
+    void lastMatchEl.offsetWidth;
+    lastMatchEl.classList.add("flash");
+  
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
       renderMatchHistory();
-
+  
       const flashEl = document.getElementById(`match-${matchKey}`);
       if (flashEl) {
         flashEl.classList.add("flash");
         setTimeout(() => flashEl.classList.remove("flash"), 1000);
       }
     }
+
+  document.body.classList.remove("flash");
+  void document.body.offsetWidth;
+  document.body.classList.add("flash");
+
+  confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+}
+
 
     document.body.classList.remove("flash");
     void document.body.offsetWidth;
