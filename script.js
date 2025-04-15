@@ -112,7 +112,6 @@ document.getElementById("reset-button").addEventListener("click", () => {
 });
 
 // Initialize app
-loadState();
 renderMatchHistory();
 document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
 startAll();
