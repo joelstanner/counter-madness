@@ -54,7 +54,7 @@ function updateMatchCounter() {
     // Increment the matchHistory counter and re-render list
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
-      renderMatchHistory();
+      renderMatchHistory(matchKey);
     }
 
     // Trigger flash animation
