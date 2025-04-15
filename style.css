@@ -82,10 +82,11 @@ body {
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); background-color: #00ff99; color: #111; }
+  0%   { transform: scale(1); background-color: #00ff99; color: #111; }
+  50%  { transform: scale(1.15); background-color: #00cc88; color: #111; }
   100% { transform: scale(1); }
 }
+
 
 @keyframes flash-bg {
   0%   { background-color: #111; }
