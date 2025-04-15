@@ -55,12 +55,19 @@ function updateMatchCounter() {
       const devil = document.getElementById("devil-alert");
       devil.style.display = "block";
       devil.classList.add("flash");
-    
+
+      // Shake screen
+      document.body.classList.add("shake");
+      setTimeout(() => {
+        document.body.classList.remove("shake");
+      }, 500);
+      
       // Optional: hide it again after a few seconds
       setTimeout(() => {
         devil.classList.remove("flash");
         devil.style.display = "none";
       }, 5000);
+
     }
 
     // Update "Last Match"
