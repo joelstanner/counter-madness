@@ -74,14 +74,32 @@ function renderMatchHistory() {
 
     listEl.appendChild(div);
   });
-
-  // ✅ Reattach cheat trigger after list is rebuilt
-  const cheatBox = document.getElementById("match-666");
-  if (cheatBox) {
-    cheatBox.style.cursor = "pointer";
-    cheatBox.addEventListener("click", activateDevilMode);
-  }
 }
+
+function attachDevilTapListener() {
+  const cheatBox = document.getElementById("match-666");
+  if (!cheatBox) return;
+
+  cheatBox.style.cursor = "pointer";
+
+  let tapCount = 0;
+  let tapTimer;
+
+  cheatBox.addEventListener("click", () => {
+    tapCount++;
+
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => {
+      tapCount = 0;
+    }, 1000); // Reset after 1s
+
+    if (tapCount === 6) {
+      activateDevilMode();
+      tapCount = 0;
+    }
+  });
+}
+
 
 function updateMatchCounter() {
   const values = Object.values(digits);
@@ -119,6 +137,7 @@ function updateMatchCounter() {
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
       renderMatchHistory();
+      attachDevilTapListener();
 
       const flashEl = document.getElementById(`match-${matchKey}`);
       if (flashEl) {
@@ -195,4 +214,5 @@ document.getElementById("reset-button").addEventListener("click", () => {
 // Initialize app
 renderMatchHistory();
 document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
+attachDevilTapListener();
 startAll();
