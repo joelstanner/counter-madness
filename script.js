@@ -51,6 +51,18 @@ function updateMatchCounter() {
     matchCount++;
     document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
 
+    if (matchKey === "666") {
+      const devil = document.getElementById("devil-alert");
+      devil.style.display = "block";
+      devil.classList.add("flash");
+    
+      // Optional: hide it again after a few seconds
+      setTimeout(() => {
+        devil.classList.remove("flash");
+        devil.style.display = "none";
+      }, 5000);
+    }
+
     // Update "Last Match"
     const lastMatchEl = document.getElementById("last-match");
     lastMatchEl.textContent = `Last Match: ${matchKey}`;
