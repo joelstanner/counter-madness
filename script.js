@@ -39,8 +39,16 @@ function renderMatchHistory() {
       div.classList.add("top-match");
     }
 
+    // 👉 Add ID to the 666 box and attach listener
     div.id = `match-${key}`;
     listEl.appendChild(div);
+
+    if (key === "666") {
+      div.style.cursor = "pointer";
+      div.addEventListener("click", () => {
+        activateDevilMode();
+      });
+    }
   });
 }
 
@@ -61,7 +69,7 @@ function updateMatchCounter() {
       setTimeout(() => {
         document.body.classList.remove("shake");
       }, 500);
-      
+
       // Optional: hide it again after a few seconds
       setTimeout(() => {
         devil.classList.remove("flash");
@@ -153,32 +161,37 @@ document.getElementById("reset-button").addEventListener("click", () => {
   lastMatchEl.textContent = "Last Match: —";
 });
 
-// secret cheat for the devil 
-let tapCount = 0;
-let tapTimer;
+function activateDevilMode() {
+  digits = { digit1: 6, digit2: 6, digit3: 6 };
+  updateMatchCounter();
 
-document.getElementById("cheat-zone").addEventListener("click", () => {
-  tapCount++;
-
-  clearTimeout(tapTimer);
-  tapTimer = setTimeout(() => {
-    tapCount = 0;
-  }, 1000); // reset if more than 1 second passes
-
-  if (tapCount === 6) {
-    digits = { digit1: 6, digit2: 6, digit3: 6 };
-    updateMatchCounter();
-
-    const msg = document.getElementById("devil-mode-msg");
-    if (msg) {
-      msg.style.display = "block";
-      setTimeout(() => { msg.style.display = "none"; }, 4000);
-    }
-
-    console.log("😈 Devil cheat activated on mobile!");
+  // Show blinking message
+  const msg = document.getElementById("devil-mode-msg");
+  if (msg) {
+    msg.style.display = "block";
+    setTimeout(() => {
+      msg.style.display = "none";
+    }, 4000);
   }
-});
 
+  // Show devil emoji + shake
+  const devil = document.getElementById("devil-alert");
+  if (devil) {
+    devil.style.display = "block";
+    devil.classList.add("flash");
+  }
+
+  document.body.classList.add("shake");
+  setTimeout(() => {
+    document.body.classList.remove("shake");
+    if (devil) {
+      devil.classList.remove("flash");
+      devil.style.display = "none";
+    }
+  }, 5000);
+
+  console.log("😈 Devil mode triggered from 666 leaderboard tap");
+}
 
 // Initialize app
 renderMatchHistory();
