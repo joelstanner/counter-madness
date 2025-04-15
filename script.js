@@ -105,7 +105,11 @@ document.getElementById("reset-button").addEventListener("click", () => {
 
   matchCount = 0;
   Object.keys(matchHistory).forEach(key => (matchHistory[key] = 0));
-  localStorage.clear();
+  Object.keys(digits).forEach(id => {
+    digits[id] = 0;
+    document.getElementById(id).textContent = "0";
+  });
+
   renderMatchHistory();
   document.getElementById("match-counter").textContent = `Matches: 0`;
 });
