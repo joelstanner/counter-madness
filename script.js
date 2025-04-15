@@ -47,9 +47,6 @@ function updateMatchCounter() {
     lastMatchEl.classList.remove("flash");
     void lastMatchEl.offsetWidth;
     lastMatchEl.classList.add("flash");
-
-    console.log("Matched!", matchKey);
-
   
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
