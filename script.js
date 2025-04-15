@@ -66,22 +66,21 @@ function renderMatchHistory() {
     const div = document.createElement("div");
     div.className = "match-item";
     div.textContent = `${key} → ${count}`;
+    div.id = `match-${key}`;
 
     if (topKeys.includes(key) && count > 0) {
       div.classList.add("top-match");
     }
 
-    // 👉 Add ID to the 666 box and attach listener
-    div.id = `match-${key}`;
     listEl.appendChild(div);
-
-    if (key === "666") {
-      div.style.cursor = "pointer";
-      div.addEventListener("click", () => {
-        activateDevilMode();
-      });
-    }
   });
+
+  // ✅ Reattach cheat trigger after list is rebuilt
+  const cheatBox = document.getElementById("match-666");
+  if (cheatBox) {
+    cheatBox.style.cursor = "pointer";
+    cheatBox.addEventListener("click", activateDevilMode);
+  }
 }
 
 function updateMatchCounter() {
