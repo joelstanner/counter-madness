@@ -124,3 +124,18 @@ body.flash {
     font-size: 1rem;
   }
 }
+
+#toggle-button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #00ff99;
+  color: #111;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#toggle-button:hover {
+  background-color: #00dd88;
+}
