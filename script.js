@@ -80,7 +80,7 @@ function attachDevilTapListener() {
   const cheatBox = document.getElementById("match-666");
   if (!cheatBox) return;
 
-  cheatBox.style.cursor = "pointer";
+  cheatBox.style.cursor = "default";
 
   let tapCount = 0;
   let tapTimer;
