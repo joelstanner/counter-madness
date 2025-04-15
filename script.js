@@ -11,6 +11,9 @@ const matchHistory = {
   "999": 0
 };
 
+let running = true;
+let timers = {};
+
 function renderMatchHistory(highlightKey) {
   const listEl = document.getElementById("match-list");
   listEl.innerHTML = "";
@@ -75,21 +78,41 @@ function startRandomSpeedCounter(id, minSpeed, maxSpeed) {
   let digit = 0;
 
   function updateDigit() {
+    if (!running) return;
+
     digit = (digit + 1) % 10;
     el.textContent = digit;
     digits[id] = digit;
     updateMatchCounter();
 
     const nextDelay = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
-    setTimeout(updateDigit, nextDelay);
+    timers[id] = setTimeout(updateDigit, nextDelay);
   }
 
   updateDigit();
 }
 
+
 // Start the counters
 startRandomSpeedCounter("digit1", 50, 800);
 startRandomSpeedCounter("digit2", 50, 700);
 startRandomSpeedCounter("digit3", 50, 600);
+
+document.getElementById("toggle-button").addEventListener("click", () => {
+  running = !running;
+
+  if (running) {
+    // Restart all timers
+    startRandomSpeedCounter("digit1", 50, 800);
+    startRandomSpeedCounter("digit2", 50, 700);
+    startRandomSpeedCounter("digit3", 50, 600);
+    document.getElementById("toggle-button").textContent = "Stop";
+  } else {
+    // Stop all timers
+    Object.values(timers).forEach(clearTimeout);
+    document.getElementById("toggle-button").textContent = "Start";
+  }
+});
+
 
 renderMatchHistory(); // Show initial 0s for all matches
