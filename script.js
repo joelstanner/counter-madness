@@ -59,13 +59,7 @@ function activateDevilMode() {
   }
 
   document.body.classList.add("shake");
-  setTimeout(() => {
-    document.body.classList.remove("shake");
-    if (devil) {
-      devil.classList.remove("flash");
-      devil.style.display = "none";
-    }
-  }, 5000);
+  fadeOutDevil();
 
   console.log("😈 Devil mode triggered from 666 leaderboard tap");
 }
@@ -117,7 +111,6 @@ function attachDevilTapListener() {
   });
 }
 
-
 function updateMatchCounter() {
   const values = Object.values(digits);
   if (values.every((val) => val === values[0])) {
@@ -136,12 +129,7 @@ function updateMatchCounter() {
         document.body.classList.remove("shake");
       }, 500);
 
-      // Optional: hide it again after a few seconds
-      setTimeout(() => {
-        devil.classList.remove("flash");
-        devil.style.display = "none";
-      }, 5000);
-
+      fadeOutDevil();
     }
 
     // Update "Last Match"
@@ -173,6 +161,21 @@ function updateMatchCounter() {
       origin: { y: 0.6 }
     });
   }
+}
+
+function fadeOutDevil(delay = 3000) {
+  const devil = document.getElementById("devil-alert");
+  if (!devil) return;
+
+  setTimeout(() => {
+    devil.classList.remove("flash");
+    devil.classList.add("fade-out");
+  }, delay);
+
+  setTimeout(() => {
+    devil.classList.remove("fade-out");
+    devil.style.display = "none";
+  }, delay + 2000); // assumes fadeOut animation duration = 2s
 }
 
 function startDigitLoop(id, minSpeed, maxSpeed) {
