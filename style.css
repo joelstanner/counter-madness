@@ -358,3 +358,11 @@ button:hover {
     transform: scale(0.9);
   }
 }
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 0.5rem;
+}
