@@ -3,9 +3,9 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
-  padding: 0;
+  padding: 1vh;
   margin: 0;
   color: #ffffff;
   background-color: #15132b;
@@ -34,10 +34,11 @@ body {
   box-shadow: 0 0 10px rgba(144, 101, 255, 0.3);
   user-select: none;
   font-size: 6rem;
-  font-weight: 700;}
+  font-weight: 700;
+}
 
 #match-counter {
-  color: #00ff99;
+  color: #66f2ff;
   font-size: 6vw;
 }
 
@@ -64,8 +65,10 @@ body {
 #match-list {
   display: grid;
   padding-top: 0.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
+  justify-items: center;
+  grid-auto-flow: row;
 }
 
 .match-item {
@@ -92,13 +95,13 @@ body {
 @keyframes pulse {
   0% {
     color: #111;
-    background-color: #00ff99;
+    background-color: #66f2ff;
     transform: scale(1);
   }
 
   50% {
     color: #111;
-    background-color: #00cc88;
+    background-color: #44d2e0;
     transform: scale(1.15);
   }
 
@@ -107,14 +110,13 @@ body {
   }
 }
 
-
 @keyframes flash-bg {
   0% {
     background-color: #111;
   }
 
   50% {
-    background-color: #00ff99;
+    background-color: #66f2ff;
   }
 
   100% {
@@ -126,7 +128,6 @@ body.flash {
   animation: flash-bg 0.3s ease-in-out;
 }
 
-/* Larger screens */
 @media (min-width: 768px) {
   body {
     align-items: flex-start;
@@ -159,14 +160,14 @@ body.flash {
   border: none;
   border-radius: 8px;
   color: #111;
-  background-color: #00ff99;
+  background-color: #66f2ff;
   cursor: pointer;
   transition: background-color 0.2s ease;
   font-size: 1.5rem;
 }
 
 #toggle-button:hover {
-  background-color: #00dd88;
+  background-color: #44d2e0;
 }
 
 #reset-button {
@@ -187,7 +188,7 @@ body.flash {
 
 #last-match {
   margin-bottom: 0.5rem;
-  color: #00ff99;
+  color: #66f2ff;
   text-shadow: 1px 1px 2px #000;
   text-align: center;
   font-size: 1.5rem;
@@ -269,7 +270,6 @@ body.shake {
   width: 60px;
   height: 60px;
   opacity: 0;
-  /* fully invisible */
 }
 
 #devil-mode-msg {
@@ -282,7 +282,6 @@ body.shake {
 }
 
 @keyframes blink {
-
   0%,
   100% {
     opacity: 1;
@@ -334,4 +333,8 @@ button {
 
 button:hover {
   background-color: #8c6eff;
+}
+
+#match-000 {
+  grid-column: 2;
 }
