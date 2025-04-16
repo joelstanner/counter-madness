@@ -34,7 +34,7 @@ body {
   box-shadow: 0 0 10px rgba(144, 101, 255, 0.3);
   user-select: none;
   transition: color 5s ease, background-color 5s ease;
-  font-size: 6rem;
+  font-size: 4rem;
   font-weight: 700;
 }
 
