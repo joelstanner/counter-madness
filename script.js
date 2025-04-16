@@ -46,6 +46,16 @@ function activateDevilMode() {
   if (devil) {
     devil.style.display = "block";
     devil.classList.add("flash");
+    
+    setTimeout(() => {
+      devil.classList.remove("flash");
+      devil.classList.add("fade-out");
+    }, 3000);
+    
+    setTimeout(() => {
+      devil.classList.remove("fade-out");
+      devil.style.display = "none";
+    }, 5000);
   }
 
   document.body.classList.add("shake");

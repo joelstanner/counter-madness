@@ -220,6 +220,10 @@ body.flash {
   animation: devilPop 0.6s ease;
 }
 
+#devil-alert.fade-out {
+  animation: fadeOut 2s ease-out forwards;
+}
+
 @keyframes devilPop {
   0% {
     opacity: 0;
@@ -337,4 +341,15 @@ button:hover {
 
 #match-000 {
   grid-column: 2;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
 }
