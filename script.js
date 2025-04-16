@@ -119,6 +119,11 @@ function updateMatchCounter() {
     document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
 
     if (matchKey === "666") {
+      document.querySelectorAll('.digit').forEach(d => {
+        d.classList.add('devil');
+        setTimeout(() => d.classList.remove('devil'), 5000);
+      });
+      
       const devil = document.getElementById("devil-alert");
       devil.style.display = "block";
       devil.classList.add("flash");
