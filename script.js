@@ -25,6 +25,13 @@ function activateDevilMode() {
   digits = { digit1: 6, digit2: 6, digit3: 6 };
   updateMatchCounter();
 
+  // Play devil sound
+  const sound = document.getElementById("devil-sound");
+  if (sound) {
+    sound.volume = 0.5; // 50% volume
+    sound.play();
+  }
+    
   // Show blinking message
   const msg = document.getElementById("devil-mode-msg");
   if (msg) {
