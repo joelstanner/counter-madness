@@ -141,38 +141,51 @@ function updateMatchCounter() {
   if (values.every((val) => val === values[0])) {
     const matchKey = `${values[0]}${values[0]}${values[0]}`;
     matchCount++;
-    document.getElementById("match-counter").textContent = `Matches: ${matchCount}`;
+
+    // Safely update match-counter
+    const matchCounterEl = document.getElementById("match-counter");
+    if (matchCounterEl) {
+      matchCounterEl.textContent = `Matches: ${matchCount}`;
+    }
 
     if (matchKey === "666") {
+      // Safely add devil class to digits
       document.querySelectorAll('.digit').forEach(d => {
         d.classList.add('devil');
         setTimeout(() => d.classList.remove('devil'), 5000);
       });
-      
+
+      // Safely show devil alert
       const devil = document.getElementById("devil-alert");
-      devil.style.display = "block";
-      devil.classList.add("flash");
+      if (devil) {
+        devil.style.display = "block";
+        devil.classList.add("flash");
+      }
 
-      // Shake screen
-      document.body.classList.add("shake");
-      setTimeout(() => {
-        document.body.classList.remove("shake");
-      }, 500);
+      // Shake screen if body exists
+      if (document.body) {
+        document.body.classList.add("shake");
+        setTimeout(() => {
+          document.body.classList.remove("shake");
+        }, 500);
+      }
 
-      fadeOutDevil();
+      if (typeof fadeOutDevil === "function") fadeOutDevil();
     }
 
-    // Update "Last Match"
+    // Update "Last Match" safely
     const lastMatchEl = document.getElementById("last-match");
-    lastMatchEl.textContent = `Last Match: ${matchKey}`;
-    lastMatchEl.classList.remove("flash");
-    void lastMatchEl.offsetWidth;
-    lastMatchEl.classList.add("flash");
+    if (lastMatchEl) {
+      lastMatchEl.textContent = `Last Match: ${matchKey}`;
+      lastMatchEl.classList.remove("flash");
+      void lastMatchEl.offsetWidth;
+      lastMatchEl.classList.add("flash");
+    }
 
     if (matchHistory[matchKey] !== undefined) {
       matchHistory[matchKey]++;
-      renderMatchHistory();
-      attachDevilTapListener();
+      if (typeof renderMatchHistory === "function") renderMatchHistory();
+      if (typeof attachDevilTapListener === "function") attachDevilTapListener();
 
       const flashEl = document.getElementById(`match-${matchKey}`);
       if (flashEl) {
@@ -181,15 +194,21 @@ function updateMatchCounter() {
       }
     }
 
-    document.body.classList.remove("flash");
-    void document.body.offsetWidth;
-    document.body.classList.add("flash");
+    // Flash body safely
+    if (document.body) {
+      document.body.classList.remove("flash");
+      void document.body.offsetWidth;
+      document.body.classList.add("flash");
+    }
 
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
+    // Call confetti if available
+    if (typeof confetti === "function") {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
   }
 }
 
