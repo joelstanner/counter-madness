@@ -1,0 +1,17 @@
+{
+  "name": "counter-madness",
+  "version": "1.0.0",
+  "description": "Make numbers go up, celebrate matches in style.",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^29.6.4",
+    "jsdom": "^22.1.0"
+  }
+}
