@@ -35,10 +35,7 @@ if (speedSlider && speedValue) {
     // Linear interpolation, inverted
     speedFactor = minFactor + (max - val) * (maxFactor - minFactor) / (max - min);
     speedValue.textContent = `${val}ms`;
-    if (running) {
-      stopAll();
-      startAll();
-    }
+    // Existing loops will pick up the new delay on their next tick
   }
   speedSlider.addEventListener('input', function() {
     updateSpeedFactor(this.value);
