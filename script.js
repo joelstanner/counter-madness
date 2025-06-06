@@ -21,6 +21,31 @@ const matchHistory = {
   "999": 0
 };
 
+let speedFactor = 1.0; // 1.0 = normal speed
+
+const speedSlider = document.getElementById('speed-slider');
+const speedValue = document.getElementById('speed-value');
+
+if (speedSlider && speedValue) {
+  function updateSpeedFactor(val) {
+    // Invert: left slow, right fast
+    // Map 50 (slowest) to 4.0, 2000 (fastest) to 0.1
+    const min = 50, max = 2000;
+    const minFactor = 4.0, maxFactor = 0.1;
+    // Linear interpolation, inverted
+    speedFactor = minFactor + (max - val) * (maxFactor - minFactor) / (max - min);
+    speedValue.textContent = `${val}ms`;
+    if (running) {
+      stopAll();
+      startAll();
+    }
+  }
+  speedSlider.addEventListener('input', function() {
+    updateSpeedFactor(this.value);
+  });
+  updateSpeedFactor(speedSlider.value);
+}
+
 function activateDevilMode() {
   digits = { digit1: 6, digit2: 6, digit3: 6 };
   updateMatchCounter();
@@ -193,7 +218,9 @@ function startDigitLoop(id, minSpeed, maxSpeed) {
     el.textContent = digits[id];
     updateMatchCounter();
 
-    const delay = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
+    // Apply speedFactor to the random delay
+    const baseDelay = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
+    const delay = Math.max(10, baseDelay * speedFactor); // Prevent too fast
     timers[id] = setTimeout(loop, delay);
   }
 
