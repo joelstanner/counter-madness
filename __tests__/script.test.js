@@ -53,7 +53,7 @@ describe('updateMatchCounter', () => {
     jest.useRealTimers();
   });
 
-  // Existing tests...
+  // Existing tests
 
   it('does nothing if digits are not all equal', () => {
     global.digits = { digit1: 1, digit2: 2, digit3: 3 };
@@ -73,10 +73,6 @@ describe('updateMatchCounter', () => {
     expect(global.renderMatchHistory).toHaveBeenCalled();
     expect(global.attachDevilTapListener).toHaveBeenCalled();
   });
-
-  // ... (other existing tests)
-
-  // --- Additional tests below ---
 
   it('does not increment matchCount for repeated non-matching calls', () => {
     global.digits = { digit1: 1, digit2: 2, digit3: 3 };
