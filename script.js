@@ -27,6 +27,9 @@ const speedSlider = document.getElementById('speed-slider');
 const speedValue = document.getElementById('speed-value');
 
 if (speedSlider && speedValue) {
+  function updateSpeedValue(val) {
+    speedValue.textContent = `${val}ms`;
+  }
   function updateSpeedFactor(val) {
     // Invert: left slow, right fast
     // Map 50 (slowest) to 4.0, 2000 (fastest) to 0.1
@@ -34,16 +37,16 @@ if (speedSlider && speedValue) {
     const minFactor = 4.0, maxFactor = 0.1;
     // Linear interpolation, inverted
     speedFactor = minFactor + (max - val) * (maxFactor - minFactor) / (max - min);
-    speedValue.textContent = `${val}ms`;
-    if (running) {
-      stopAll();
-      startAll();
-    }
+    // Do NOT restart the counters here!
   }
   speedSlider.addEventListener('input', function() {
-    updateSpeedFactor(this.value);
+    updateSpeedValue(this.value);
+    updateSpeedFactor(this.value); // Just update the factor, don't restart
   });
-  updateSpeedFactor(speedSlider.value);
+  speedSlider.addEventListener('change', function() {
+    updateSpeedValue(this.value); // Optional, for consistency
+  });
+  updateSpeedValue(speedSlider.value);
 }
 
 function activateDevilMode() {
